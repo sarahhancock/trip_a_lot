@@ -1,23 +1,48 @@
+<!DOCTYPE html>
 <html>
-  <style>
-    body{ 
-      font-size: 15pt;
-      font-family: arial;
-    }
-  </style>
+   <head>
+    <style>
+      #header{
+          font-size: 40px;
+          padding-bottom: 25px;
+          padding-top: 25px;
+          font-weight: bold;
+      }
+
+    </style>
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <script type="text/javascript" src="{{ url_for('static', filename = 'index.js') }}"></script>
+    <script>
+      var cities = {{cities|tojson}};
+    </script>
+
+   </head>
+
+   {% extends "layout.html" %}
+   {% block content %}
+
+   <body>
+      <div class = "container">
+        <div id = "header" class = "row">
+          Website Name Wooo Yay
+        </div>
+        <div class = "row">
+          <div class = "col">
+            <div class = "row"> Explore Cities </div>
+          </div>
+        </div><br><br>
+        <div id = "results" class = "row">
+        </div>
+      </div>
+   </body>
+   
 
 
-<body>
-  <h1>What Should We Name Our Website LOL</h1>
-
-  <div>
-    {% for n in data %}
-    <div>{{n}}</div>
-    {% endfor %}
-  </div>
 
 
-</body>
-
+   {% endblock %}
 
 </html>
