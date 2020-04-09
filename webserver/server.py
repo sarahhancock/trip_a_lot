@@ -43,9 +43,10 @@ def index():
   cursor = g.conn.execute("SELECT name FROM city")
   cities = []
   for result in cursor:
-    cities.append(result['name'])  # can also be accessed using result[0]
+    cities.append(str(result['name']))  # can also be accessed using result[0]
   cursor.close()
-  return render_template("index.html", cities = cities)
+  context = dict(data = cities)
+  return render_template("index.html", **context)
 
 
 if __name__ == "__main__":

@@ -1,5 +1,5 @@
 function addResult(city) {
-    var city_name = city["name"]
+    var city_name = city
 
     var card_container = $("<div class = 'card_container'>")
 
@@ -18,6 +18,8 @@ function addResult(city) {
 }
 
 $(document).ready(function(){
-    for city in cities:
+    for (city in cities){
+	alert(city)
         addResult(city)
+    }
 })
