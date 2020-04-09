@@ -81,7 +81,7 @@ def index():
   for result in cursor:
     cities.append(result['name'])  # can also be accessed using result[0]
   cursor.close()
-  context = dict(data = names)
+  context = dict(data = cities)
   return render_template("index.html", **context)
 
 
