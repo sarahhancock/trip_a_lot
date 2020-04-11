@@ -35,6 +35,9 @@
           </div>
         </div><br><br>
         <div id = "results" class = "row">
+        {% for n in data %}
+          <div class = "card" id = "{{n}}">{{n}}</div>
+        {% endfor %}          
         </div>
       </div>
    </body>
