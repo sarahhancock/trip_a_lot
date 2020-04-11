@@ -60,7 +60,7 @@ def view_city(name=None):
     cursor.close()
 
     #get country city is in
-    cursor = g.conn.execute("SELECT place.name FROM place, city, in_country WHERE city.name = '{}' AND country.place_id = place.place_id AND in_country.city_id = city.place_id".format(name))
+    cursor = g.conn.execute("SELECT place.name FROM place, city, in_country WHERE city.name = '{}' AND in_country.country_id = place.place_id AND in_country.city_id = city.place_id".format(name))
     for result in cursor:
       city["country"] = str(result[0])
     cursor.close()
