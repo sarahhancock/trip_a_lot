@@ -1,9 +1,8 @@
 
 $(document).ready(function(){
     
-    $(".btn").click(function(){
-        
-        route = "/view_city/" + this.id
+    $(".city").click(function(){
+        route = "/view_content/" + this.id
         window.location.href = route
     })
 })

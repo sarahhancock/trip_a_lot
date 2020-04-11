@@ -42,8 +42,9 @@ def index():
   context = dict(data = cities)
   return render_template("index.html", **context)
 
-@app.route('/view/<name>')
-def view(name=None):
+@app.route('/view_city/<name>')
+def view_city(name=None):
+    #get information about city
     cursor = g.conn.execute("SELECT name, weather, main_attraction FROM city WHERE name = '{}'".format(name))
     city = {}
     for result in cursor:
@@ -51,8 +52,49 @@ def view(name=None):
       city["weather"] = str(result['weather'])
       city["main_attraction"] = str(result['main_attraction'])
     cursor.close()
+    #get content titles about city
+    cursor = g.conn.execute("SELECT title FROM about, city WHERE city.name = '{}' and about.place_id = city.place_id".format(name))
+    content = []
+    for result in cursor:
+      content.append(str(result['title']))
+    cursor.close()
+    context = dict(data = city, content = content)
+    return render_template('view_city.html', **context)  
+
+
+@app.route('/view_country/<name>')
+def view_country(name=None):
+    #get information about country
+    cursor = g.conn.execute("SELECT gdp, population, crime_rate FROM place, country WHERE place.name = '{}' and country.place_id = place.place_id".format(name))
+    country = {}
+    for result in cursor:
+      country["name"] = str(name)
+      country["gdp"] = str(result['gdp'])
+      country["population"] = str(result['population'])
+      country["crime_rate"] = str(result['crime_rate'])
+    cursor.close()
+    #get content titles about country
+    cursor = g.conn.execute("SELECT title FROM about, country, place WHERE place.name = '{}' and about.place_id = country.place_id and place.place_id = country.place_id".format(name))
+    content = []
+    for result in cursor:
+      content.append(str(result['title']))
+    cursor.close()
+    #get cities in country
+    cursor = g.conn.execute("SELECT city.name from city, country, in_country, place where place.name = '{}' and place.place_id = in_country.country_id and in_country.city_id = city.place_id".format(name))
+    cities = []
+    for result in cursor:
+      cities.append(str(result['city.name']))  
+    cursor.close()
+
+    context = dict(data = city, content = content, cities = cities)
+    return render_template('view_country.html', **context) 
+
+@app.route('/view_content/<title>')
+def view_content(name=None):
+    cursor = g.conn.execute("SELECT title FROM about, city WHERE city.name = '{}' and about.place_id = city.place_id".format(title))
+
     context = dict(data = city)
-    return render_template('view.html', **context)  
+    return render_template('view_content.html', **context) 
 
 
 if __name__ == "__main__":

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <style>
+        #header{
+          font-size: 40px;
+          padding: 50px;
+          padding-bottom: 25px;
+          padding-left: 0px;
+          font-weight: bold;
+        }
+      </style>
+      <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+      <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+      <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+      <script type="text/javascript" src="{{ url_for('static', filename = 'view.js') }}"></script>
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    </head>
+
+    {% extends "layout.html" %}
+    {% block content %}
+    <body>
+      <div id = "city_info">
+        <div id = "header">{{ data["name"] }}</div>
+        <div>Weather: {{ data["weather"] }}</div>
+        <div> Main attraction: {{ data["main_attraction"] }}</div>
+      </div>
+      <div id = "content">
+        Articles and Photos about {{ data["name"] }}
+        {% for n in content %}
+          <div class = "row">
+            <div class = "col">
+              <div class = "city btn btn-outline-info" id = "{{n}}">{{n}}</div>
+            </div>
+          </div>
+          {% endfor %} 
+      </div>
+  	
+    </body>
+    {% endblock %}
+</html>

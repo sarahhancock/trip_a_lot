@@ -22,26 +22,35 @@
    {% block content %}
 
    <body>
-      <div class = "container">
-        <div id = "header" class = "row">
-          Website Name Wooo Yay
-        </div>
-        <div class = "row">
-          <div class = "col">
-            <div class = "row"> Explore Cities </div>
-          </div>
-        </div><br><br>
-        <div id = "results" class = "container">
-          {% for n in data %}
+      <div id = "country_info">
+        <div id = "header">{{ data["name"] }}</div>
+        <div>GDP: {{ data["gdp"] }}</div>
+        <div>Population: {{ data["population"] }}</div>
+        <div>Crime Rate: {{ data["crime_rate"] }}</div>
+      </div>
+      <br>
+      <div id = "content">
+        Articles and Photos about {{ data["name"] }}
+        {% for n in content %}
           <div class = "row">
             <div class = "col">
-              <div class = "btn btn-outline-info" id = "{{n}}">{{n}}</div>
+              <div class = "content btn btn-outline-info" id = "{{n}}">{{n}}</div>
             </div>
           </div>
-          {% endfor %}          
-        </div>
+          {% endfor %} 
       </div>
-   </body>
+      <div id = "cities">
+        Cities in {{ data["name"] }}
+        {% for n in data %}
+          <div class = "row">
+            <div class = "col">
+              <div class = "city btn btn-outline-info" id = "{{n}}">{{n}}</div>
+            </div>
+          </div>
+          {% endfor %}  
+      </div>
+    
+    </body>
    
 
 
