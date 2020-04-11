@@ -14,7 +14,7 @@
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-    <script type="text/javascript" src="{{ url_for('static', filename = 'view_country.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename = 'search_results.js') }}"></script>
 
    </head>
 
@@ -22,35 +22,31 @@
    {% block content %}
 
    <body>
-      <div id = "country_info">
-        <div id = "header">{{ data["name"] }}</div>
-        <div>GDP: {{ data["gdp"] }}</div>
-        <div>Population: {{ data["population"] }}</div>
-        <div>Crime Rate: {{ data["crime_rate"] }}</div>
-      </div>
-      <br>
-      <div id = "content">
-        Articles and Photos about {{ data["name"] }}
-        {% for n in content %}
+      <div class = "container">
+        <div id = "header" class = "row">
+          Search Results
+        </div>
+        </div><br><br>
+        <div id = "results" class = "container">
+          {% for n in countries %}
           <div class = "row">
             <div class = "col">
-              <div class = "content btn btn-outline-info" id = "{{n}}">{{n}}</div>
+              <div class = "country btn btn-outline-info" id = "{{n}}">{{n}}</div>
             </div>
           </div>
-          {% endfor %} 
-      </div>
-      <div id = "cities">
-        Cities in {{ data["name"] }}
-        {% for n in cities %}
+          {% endfor %}          
+        </div>
+        <div id = "results" class = "container">
+          {% for n in cities %}
           <div class = "row">
             <div class = "col">
               <div class = "city btn btn-outline-info" id = "{{n}}">{{n}}</div>
             </div>
           </div>
-          {% endfor %}  
+          {% endfor %}          
+        </div>
       </div>
-    
-    </body>
+   </body>
    
 
 

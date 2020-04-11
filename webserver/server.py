@@ -91,10 +91,26 @@ def view_country(name=None):
 
 @app.route('/view_content/<title>')
 def view_content(name=None):
-    cursor = g.conn.execute("SELECT title FROM about, city WHERE city.name = '{}' and about.place_id = city.place_id".format(title))
 
-    context = dict(data = city)
     return render_template('view_content.html', **context) 
+
+@app.route('/search', methods=['GET'])
+def search():
+    search_term = request.args.get('q')
+    s = search_term.lower()
+    cursor = g.conn.execute("SELECT name FROM city WHERE name LIKE '%{}%'".format(s))
+    cities = []
+    for result in cursor:
+      cities.append(str(result[0]))  
+    cursor.close()
+    cursor = g.conn.execute("SELECT place.name FROM place, country WHERE place.name LIKE '%{}%' and country.place_id = place.place_id".format(s))
+    countries = []
+    for result in cursor:
+      countries.append(str(result[0]))  
+    cursor.close()
+    context = dict(cities = cities, countries = countries)
+    return render_template('search_results.html', **context)
+
 
 
 if __name__ == "__main__":
