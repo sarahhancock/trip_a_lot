@@ -97,13 +97,14 @@ def view_content(name=None):
 @app.route('/search', methods=['GET'])
 def search():
     search_term = request.args.get('q')
-    s = search_term.lower()
-    cursor = g.conn.execute("SELECT name FROM city WHERE name LIKE '%{}%'".format(s))
+    s1 = search_term.lower()
+    s2 = s1.title()
+    cursor = g.conn.execute("SELECT name FROM city WHERE name LIKE '%%{}%%' OR name LIKE '%%{}%%'".format(s1,s2))
     cities = []
     for result in cursor:
       cities.append(str(result[0]))  
     cursor.close()
-    cursor = g.conn.execute("SELECT place.name FROM place, country WHERE place.name LIKE '%{}%' and country.place_id = place.place_id".format(s))
+    cursor = g.conn.execute("SELECT place.name FROM place, country WHERE place.name LIKE '%%{}%%' OR name Like '%%{}%%' and country.place_id = place.place_id".format(s1, s2))
     countries = []
     for result in cursor:
       countries.append(str(result[0]))  
