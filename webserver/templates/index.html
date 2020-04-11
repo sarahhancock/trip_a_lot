@@ -15,9 +15,6 @@
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
     <script type="text/javascript" src="{{ url_for('static', filename = 'index.js') }}"></script>
-    <script>
-      var cities = {{data|tojson}};
-    </script>
 
    </head>
 
@@ -36,7 +33,7 @@
         </div><br><br>
         <div id = "results" class = "row">
         {% for n in data %}
-          <div class = "card" id = "{{n}}">{{n}}</div>
+          <div class = "card" id = "{{n}}">{{n}}</div><br>
         {% endfor %}          
         </div>
       </div>

@@ -1,12 +1,6 @@
 
 """
-Columbia's COMS W4111.001 Introduction to Databases
-Example Webserver
-To run locally:
-    python server.py
-Go to http://localhost:8111 in your browser.
-A debugger such as "pdb" may be helpful for debugging.
-Read about it online.
+Travel Website Server
 """
 import os
   # accessible as a variable in index.html:
@@ -43,10 +37,22 @@ def index():
   cursor = g.conn.execute("SELECT name FROM city")
   cities = []
   for result in cursor:
-    cities.append(str(result['name']))  # can also be accessed using result[0]
+    cities.append(str(result['name']))  
   cursor.close()
   context = dict(data = cities)
   return render_template("index.html", **context)
+
+@app.route('/view/<name>')
+def view(name=None):
+    cursor = g.conn.execute("SELECT weather, main_attraction FROM city WHERE name = {}".format(name))
+    city = {}
+    for result in cursor:
+      city["name"] = name
+      city["weather"] = weather
+      city["main_attraction"] = main_attraction
+    cursor.close()
+    context = dict(data = city)
+    return render_template('view.html', **context)  
 
 
 if __name__ == "__main__":
