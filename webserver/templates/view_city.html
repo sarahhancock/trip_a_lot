@@ -9,6 +9,10 @@
           padding-left: 0px;
           font-weight: bold;
         }
+        .country{
+          font-size: 25px;
+          font-weight: bold;
+        }
       </style>
       <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
       <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
@@ -23,6 +27,7 @@
     <body>
       <div id = "city_info">
         <div id = "header">{{ data["name"] }}</div>
+        <div id = "{{data['country']}}" class = "btn-outline-secondary country"> {{data["country"]}}</div>
         <div>Weather: {{ data["weather"] }}</div>
         <div> Main attraction: {{ data["main_attraction"] }}</div>
       </div>
@@ -31,7 +36,7 @@
         {% for n in content %}
           <div class = "row">
             <div class = "col">
-              <div class = "city btn btn-outline-info" id = "{{n}}">{{n}}</div>
+              <div class = "content btn btn-outline-info" id = "{{n}}">{{n}}</div>
             </div>
           </div>
           {% endfor %} 
