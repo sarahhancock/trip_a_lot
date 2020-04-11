@@ -1,8 +1,8 @@
 
 $(document).ready(function(){
-    alert("hi!")
-    $(".card").click(function(){
-        alert(this.id)
+    
+    $(".btn").click(function(){
+        
         route = "/view/" + this.id
         window.location.href = route
     })

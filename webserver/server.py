@@ -44,12 +44,12 @@ def index():
 
 @app.route('/view/<name>')
 def view(name=None):
-    cursor = g.conn.execute("SELECT weather, main_attraction FROM city WHERE name = {}".format(name))
+    cursor = g.conn.execute("SELECT name, weather, main_attraction FROM city WHERE name = '{}'".format(name))
     city = {}
     for result in cursor:
-      city["name"] = name
-      city["weather"] = weather
-      city["main_attraction"] = main_attraction
+      city["name"] = str(result['name'])
+      city["weather"] = str(result['weather'])
+      city["main_attraction"] = str(result['main_attraction'])
     cursor.close()
     context = dict(data = city)
     return render_template('view.html', **context)  

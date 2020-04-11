@@ -21,15 +21,10 @@
     {% extends "layout.html" %}
     {% block content %}
     <body>
-      {% for dict_item in parent_dict %}
-        {% for key, value in dict_item.items() %}
-          <div>
-            <h1>{{key}}</h1>
-            <h2>{{value}}</h2>
-          </div>
-        {% endfor %}
-      {% endfor %}
-      
+    	<div id = "header">{{ data["name"] }}</div>
+	<div>Weather: {{ data["weather"] }}</div>
+	<div> Main attraction: {{ data["main_attraction"] }}</div>
+  	
     </body>
     {% endblock %}
 </html>
