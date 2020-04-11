@@ -80,13 +80,13 @@ def view_country(name=None):
       content.append(str(result['title']))
     cursor.close()
     #get cities in country
-    cursor = g.conn.execute("SELECT city.name from city, country, in_country, place where place.name = '{}' and place.place_id = in_country.country_id and in_country.city_id = city.place_id".format(name))
+    cursor = g.conn.execute("SELECT DISTINCT city.name from city, country, in_country, place where place.name = '{}' and place.place_id = in_country.country_id and in_country.city_id = city.place_id".format(name))
     cities = []
     for result in cursor:
-      cities.append(str(result['city.name']))  
+      cities.append(str(result[0]))  
     cursor.close()
 
-    context = dict(data = city, content = content, cities = cities)
+    context = dict(data = country, content = content, cities = cities)
     return render_template('view_country.html', **context) 
 
 @app.route('/view_content/<title>')
