@@ -71,7 +71,7 @@ def view_city(name=None):
 def view_country(name=None):
 
     #get information about country
-    cursor = g.conn.execute("SELECT place_id, gdp, population, crime_rate FROM place, country WHERE place.name = '{}' and country.place_id = place.place_id".format(name))
+    cursor = g.conn.execute("SELECT place.place_id, gdp, population, crime_rate FROM place, country WHERE place.name = '{}' and country.place_id = place.place_id".format(name))
     country = {}
     for result in cursor:
       country["id"] = str(result[0])
@@ -100,8 +100,6 @@ def view_country(name=None):
     for result in cursor:
       country["continent"] = str(result[0])
     cursor.close()
-    context = dict(data = city, content = content)
-    return render_template('view_city.html', **context)  
 
     context = dict(data = country, content = content, cities = cities)
     return render_template('view_country.html', **context) 
@@ -113,10 +111,10 @@ def view_continent(name=None):
     cursor = g.conn.execute("SELECT area, north_south, east_west FROM place, continent WHERE place.name = '{}' and continent.place_id = place.place_id".format(name))
     continent = {}
     for result in cursor:
-      country["name"] = str(name)
-      country["area"] = str(result['area'])
-      country["north_south"] = str(result['north_south'])
-      country["east_west"] = str(result['east_west'])
+      continent["name"] = str(name)
+      continent["area"] = str(result['area'])
+      continent["north_south"] = str(result['north_south'])
+      continent["east_west"] = str(result['east_west'])
     cursor.close()
 
     #get content titles about continent
@@ -132,11 +130,11 @@ def view_continent(name=None):
     for result in cursor:
       countries.append(str(result[0]))  
     cursor.close()
-    context = dict(data = country, content = content, countries = countries)
+    context = dict(data = continent, content = content, countries = countries)
     return render_template('view_country.html', **context) 
 
 @app.route('/view_content/<title>')
-def view_content(name=None):
+def view_content(title=None):
   #get editor info
   cursor = g.conn.execute("SELECT name, YOE, education FROM editor, edits where edits.title = '{}' and edits.editor_id = editor.editor_id".format(title))
   editor = {}
