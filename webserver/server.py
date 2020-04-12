@@ -144,19 +144,21 @@ def view_content(title=None):
     editor["yoe"] = str(result["yoe"])
     editor["education"] = str(result["education"])
   cursor.close()
-  #get article OR photo info
+  #decide if content is photo or article
   cursor = g.conn.execute("SELECT text, tag from article where title = '{}'".format(title))
   n = 0
   for result in cursor:
       n += 1
   if n > 0: #content is article
     article = {}
+    #get article information
     cursor = g.conn.execute("SELECT text, tag from article where title = '{}'".format(title))
     for result in cursor:
       article["title"] = str(title)
       article["tag"] = str(result['tag'])
       article["text"] = str(result['text'])
     cursor.close()
+    #get author information
     cursor = g.conn.execute("SELECT name, bio, genre from writer, writes where writes.title = '{}' and writes.writer_id = writer.writer_id".format(title))
     writer = {}
     for result in cursor:
@@ -167,15 +169,28 @@ def view_content(title=None):
     context = dict(article = article, writer = writer, editor = editor)
     return render_template('view_article.html', **context) 
   else: #content is a photo
+    #get photo information
+    photo = {}
+    cursor = g.conn.execute("SELECT size, resolution, type, url from photo where title = '{}'".format(title))
+    for result in cursor:
+      photo["title"] = str(title)
+      photo["size"] = str(result['tag'])
+      photo["resolution"] = str(result['resolution'])
+      photo["type"] = str(result['type'])
+      photo["url"] = str(result['url'])
+    cursor.close()
+    #get photographer information
+    cursor = g.conn.execute("SELECT name, bio, company, known_for, copyright from photographer, takes where takes.title = '{}' and takes.photographer_id = photographer.photographer_id".format(title))
+    photographer = {}
+    for result in cursor:
+      photographer["name"] = str(result['name'])
+      photographer["bio"] = str(result["bio"])
+      photographer["company"] = str(result["company"])
+      photographer["known_for"] = str(result["known_for"])
+      photographer["copyright"] = str(result["copyright"])
+    cursor.close()
+    context = dict(photo = photo, photographer = photographer, editor = editor)
     return render_template('view_photo.html', **context)
-
-
-
-
-@app.route('/view_writer/<writer_id>')
-def view_writer(name=None):
-
-  return render_template('view_writer.html', **context) 
 
 @app.route('/search', methods=['GET'])
 def search():

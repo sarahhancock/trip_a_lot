@@ -35,14 +35,19 @@
       </div>
       <br>
       <div id = "content">
+
         Articles and Photos about {{ data["name"] }}
-        {% for n in content %}
-          <div class = "row">
-            <div class = "col">
-              <div class = "content btn btn-outline-info" id = "{{n}}">{{n}}</div>
-            </div>
-          </div>
-          {% endfor %} 
+        {% if content|length %}
+            {% for n in content %}
+              <div class = "row">
+                <div class = "col">
+                  <div class = "content btn btn-outline-info" id = "{{n}}">{{n}}</div>
+                </div>
+              </div>
+            {% endfor %} 
+        {% else %}
+            No articles or photos about {{ data["name"] }} yet.
+        {% endif %}
       </div>
       <div id = "cities">
         Countries in {{ data["name"] }}

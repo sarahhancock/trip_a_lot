@@ -20,15 +20,22 @@
     {% extends "layout.html" %}
     {% block content %}
     <body>
-      <div id = "article-info">
-        <div id = "header">{{ article["title"] }}</div>
-        <div>Tag: {{ article["tag"] }}</div>
-        <div> Preview: <br> {{ article["text"] }}</div>
+      <div id = "header">{{ article["title"] }}</div>
+      <div id = "photo">
+        <img src = "{{ photo['url'] }}">
       </div>
-      <div id = "writer-info">
-        <div>Author: {{ writer["name"] }}</div> 
+      <div id = "photo-info">
+        Photo Information:
+        <div> Size: {{ photo["size"] }}</div>
+        <div> Resolution:{{ photo["resolution"] }}</div>
+        <div> Type: {{ photo["type"] }}</div>
+        <div> Copyright: {{ photo["copyright"] }}</div>
+      </div>
+      <div id = "photographer-info">
+        <div> Photographer: {{ writer["name"] }}</div> 
         <div> Bio: {{ writer["bio"] }}</div> 
-        <div> Author Genre: {{ writer["genre"] }}</div> 
+        <div> Company: {{ writer["genre"] }}</div> 
+        <div> Known For {{ writer["genre"] }}</div> 
       </div>
       <div id = "editor-info">
         This article was edited by {{ editor["name"] }}, a {{ editor["education"] }} graduate with {{ editor["yoe"] }} years of experience.  	
