@@ -108,9 +108,10 @@ def view_country(name=None):
 def view_continent(name=None):
 
     #get information about continent
-    cursor = g.conn.execute("SELECT area, north_south, east_west FROM place, continent WHERE place.name = '{}' and continent.place_id = place.place_id".format(name))
+    cursor = g.conn.execute("SELECT continent.place_id, area, north_south, east_west FROM place, continent WHERE place.name = '{}' and continent.place_id = place.place_id".format(name))
     continent = {}
     for result in cursor:
+      continent["id"] = str(result[0])
       continent["name"] = str(name)
       continent["area"] = str(result['area'])
       continent["north_south"] = str(result['north_south'])
@@ -125,7 +126,7 @@ def view_continent(name=None):
     cursor.close()
     
     #get countries in continent
-    cursor = g.conn.execute("SELECT DISTINCT place.name from country, continent, in_continent, place where place.name = '{}' and place.place_id = in_continent.continent_id and in_continent.country_id = country.place_id".format(name))
+    cursor = g.conn.execute("SELECT DISTINCT place.name from in_continent, place where place.place_id = in_continent.country_id and in_continent.continent_id = '{}'".format(continent['id']))
     countries = []
     for result in cursor:
       countries.append(str(result[0]))  
@@ -140,13 +141,17 @@ def view_content(title=None):
   editor = {}
   for result in cursor:
     editor["name"] = str(result["name"])
-    editor["YOE"] = str(result["yoe"])
+    editor["yoe"] = str(result["yoe"])
     editor["education"] = str(result["education"])
   cursor.close()
   #get article OR photo info
   cursor = g.conn.execute("SELECT text, tag from article where title = '{}'".format(title))
-  if cursor == []: #content is article
+  n = 0
+  for result in cursor:
+      n += 1
+  if n > 0: #content is article
     article = {}
+    cursor = g.conn.execute("SELECT text, tag from article where title = '{}'".format(title))
     for result in cursor:
       article["title"] = str(title)
       article["tag"] = str(result['tag'])

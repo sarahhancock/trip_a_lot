@@ -18,7 +18,7 @@
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-    <script type="text/javascript" src="{{ url_for('static', filename = 'view_country.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename = 'view_continent.js') }}"></script>
 
    </head>
 
@@ -49,7 +49,7 @@
         {% for n in countries %}
           <div class = "row">
             <div class = "col">
-              <div class = "city btn btn-outline-info" id = "{{n}}">{{n}}</div>
+              <div class = "country btn btn-outline-info" id = "{{n}}">{{n}}</div>
             </div>
           </div>
           {% endfor %}  
