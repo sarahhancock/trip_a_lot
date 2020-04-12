@@ -36,7 +36,20 @@ def index():
   for result in cursor:
     cities.append(str(result['name']))  
   cursor.close()
-  context = dict(data = cities)
+
+  cursor = g.conn.execute("SELECT name FROM place, country WHERE place.place_id = country.place_id")
+  countries = []
+  for result in cursor:
+    countries.append(str(result['name']))
+  cursor.close()
+
+  cursor = g.conn.execute("SELECT name FROM place, continent WHERE place.place_id = continent.place_id")
+  continents = []
+  for result in cursor:
+    continents.append(str(result['name']))
+  cursor.close()
+
+  context = dict(data = cities, countries = countries, continents = continents)
   return render_template("index.html", **context)
 
 @app.route('/view_city/<name>')

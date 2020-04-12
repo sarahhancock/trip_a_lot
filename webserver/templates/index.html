@@ -23,8 +23,14 @@
 
         <div id = "results" class = "card-columns">
           {% for n in data %}
-              <div class = "card bg-light" id = "{{n}}">{{n}}</div>
+	  <div class = "card city bg-light" id = "{{n}}">{{n}}</div>
           {% endfor %}          
+	  {% for n in countries %}
+              <div class = "card country bg-light" id = "{{n}}">{{n}}</div>
+          {% endfor %}
+	  {% for n in continents %}
+              <div class = "card continent bg-light" id = "{{n}}">{{n}}</div>
+          {% endfor %}
         </div>
       </div>
    </body>
