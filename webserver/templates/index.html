@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html>
    <head>
-    <style>
-      #header{
-          font-size: 40px;
-          padding-bottom: 25px;
-          padding-top: 25px;
-          font-weight: bold;
-      }
-
-    </style>
     <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -24,29 +15,19 @@
    <body>
       <div class = "container">
         <div id = "header" class = "row">
-          Website Name Wooo Yay
+          Trip-A-Lot
         </div>
-        <div class = "row">
-          <div class = "col">
-            <div class = "row"> Explore Cities </div>
-          </div>
-        </div><br><br>
-        <div id = "results" class = "container">
+        <div class = "row subheader">
+          Explore Places
+        </div>
+
+        <div id = "results" class = "card-columns">
           {% for n in data %}
-          <div class = "row">
-            <div class = "col">
-              <div class = "btn btn-outline-info" id = "{{n}}">{{n}}</div>
-            </div>
-          </div>
+              <div class = "card bg-light" id = "{{n}}">{{n}}</div>
           {% endfor %}          
         </div>
       </div>
    </body>
-   
-
-
-
-
    {% endblock %}
 
 </html>

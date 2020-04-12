@@ -31,15 +31,18 @@
         <div>Weather: {{ data["weather"] }}</div>
         <div> Main attraction: {{ data["main_attraction"] }}</div>
       </div>
+      
       <div id = "content">
-        Articles and Photos about {{ data["name"] }}
-        {% for n in content %}
-          <div class = "row">
-            <div class = "col">
-              <div class = "content btn btn-outline-info" id = "{{n}}">{{n}}</div>
-            </div>
+        <span class = "subheader">Articles and Photos about {{ data["name"] }} </span>
+        {% if content|length %}
+          <div class="card-columns">
+            {% for n in content %}
+            <div class = "content card bg-light" id = "{{n}}">{{n}}</div>
+            {% endfor %} 
           </div>
-          {% endfor %} 
+        {% else %}
+            No articles or photos about {{ data["name"] }} yet.
+        {% endif %}
       </div>
   	
     </body>
