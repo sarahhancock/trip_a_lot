@@ -145,11 +145,12 @@ def view_content(title=None):
     editor["education"] = str(result["education"])
   cursor.close()
   #decide if content is photo or article
-  cursor = g.conn.execute("SELECT text, tag from article where title = '{}'".format(title))
-  n = 0
+  cursor = g.conn.execute("SELECT CASE WHEN EXISTS ( SELECT * FROM article WHERE title = '{}' )THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT) END".format(title))
   for result in cursor:
-      n += 1
-  if n > 0: #content is article
+      n = result[0]
+      print(str(n))
+      
+  if int(n) > 0: #content is article
     article = {}
     #get article information
     cursor = g.conn.execute("SELECT text, tag from article where title = '{}'".format(title))
@@ -171,23 +172,23 @@ def view_content(title=None):
   else: #content is a photo
     #get photo information
     photo = {}
-    cursor = g.conn.execute("SELECT size, resolution, type, url from photo where title = '{}'".format(title))
+    cursor = g.conn.execute("SELECT size, resolution, type, copyright, url from photo where title = '{}'".format(title))
     for result in cursor:
       photo["title"] = str(title)
-      photo["size"] = str(result['tag'])
+      photo["size"] = str(result['size'])
       photo["resolution"] = str(result['resolution'])
       photo["type"] = str(result['type'])
+      photo["copyright"] = str(result["copyright"])
       photo["url"] = str(result['url'])
     cursor.close()
     #get photographer information
-    cursor = g.conn.execute("SELECT name, bio, company, known_for, copyright from photographer, takes where takes.title = '{}' and takes.photographer_id = photographer.photographer_id".format(title))
+    cursor = g.conn.execute("SELECT name, bio, company, known_for from photographer, takes where takes.title = '{}' and takes.photographer_id = photographer.photographer_id".format(title))
     photographer = {}
     for result in cursor:
       photographer["name"] = str(result['name'])
       photographer["bio"] = str(result["bio"])
       photographer["company"] = str(result["company"])
       photographer["known_for"] = str(result["known_for"])
-      photographer["copyright"] = str(result["copyright"])
     cursor.close()
     context = dict(photo = photo, photographer = photographer, editor = editor)
     return render_template('view_photo.html', **context)

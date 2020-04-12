@@ -20,7 +20,7 @@
     {% extends "layout.html" %}
     {% block content %}
     <body>
-      <div id = "header">{{ article["title"] }}</div>
+      <div id = "header">{{ photo["title"] }}</div>
       <div id = "photo">
         <img src = "{{ photo['url'] }}">
       </div>
@@ -32,10 +32,10 @@
         <div> Copyright: {{ photo["copyright"] }}</div>
       </div>
       <div id = "photographer-info">
-        <div> Photographer: {{ writer["name"] }}</div> 
-        <div> Bio: {{ writer["bio"] }}</div> 
-        <div> Company: {{ writer["genre"] }}</div> 
-        <div> Known For {{ writer["genre"] }}</div> 
+        <div> Photographer: {{ photographer["name"] }}</div> 
+        <div> Bio: {{ photographer["bio"] }}</div> 
+        <div> Company: {{ photographer["company"] }}</div> 
+        <div> Known For {{ photographer["known_for"] }}</div> 
       </div>
       <div id = "editor-info">
         This article was edited by {{ editor["name"] }}, a {{ editor["education"] }} graduate with {{ editor["yoe"] }} years of experience.  	
