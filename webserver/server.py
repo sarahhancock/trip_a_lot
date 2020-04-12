@@ -131,21 +131,21 @@ def view_continent(name=None):
       countries.append(str(result[0]))  
     cursor.close()
     context = dict(data = continent, content = content, countries = countries)
-    return render_template('view_country.html', **context) 
+    return render_template('view_continent.html', **context) 
 
 @app.route('/view_content/<title>')
 def view_content(title=None):
   #get editor info
   cursor = g.conn.execute("SELECT name, YOE, education FROM editor, edits where edits.title = '{}' and edits.editor_id = editor.editor_id".format(title))
   editor = {}
-  for result in editor:
+  for result in cursor:
     editor["name"] = str(result["name"])
     editor["YOE"] = str(result["yoe"])
     editor["education"] = str(result["education"])
   cursor.close()
   #get article OR photo info
   cursor = g.conn.execute("SELECT text, tag from article where title = '{}'".format(title))
-  if cursor > 0: #content is article
+  if cursor == []: #content is article
     article = {}
     for result in cursor:
       article["title"] = str(title)

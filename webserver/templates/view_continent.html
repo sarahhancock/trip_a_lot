@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+   <head>
+    <style>
+      #header{
+          font-size: 40px;
+          padding-bottom: 25px;
+          padding-top: 25px;
+          font-weight: bold;
+      }
+      .continent{
+          font-size: 25px;
+          font-weight: bold;
+        }
+
+    </style>
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <script type="text/javascript" src="{{ url_for('static', filename = 'view_country.js') }}"></script>
+
+   </head>
+
+   {% extends "layout.html" %}
+   {% block content %}
+
+   <body>
+      <div id = "country_info">
+        <div id = "header">{{ data["name"] }}</div>
+        <div id = "{{data['continent']}}" class = "btn-outline-secondary continent"> {{data["continent"]}}</div>
+        <div>Area: {{ data["area"] }}</div>
+        <div>North or South: {{ data["north_south"] }}</div>
+        <div>East or West: {{ data["east_west"] }}</div>
+      </div>
+      <br>
+      <div id = "content">
+        Articles and Photos about {{ data["name"] }}
+        {% for n in content %}
+          <div class = "row">
+            <div class = "col">
+              <div class = "content btn btn-outline-info" id = "{{n}}">{{n}}</div>
+            </div>
+          </div>
+          {% endfor %} 
+      </div>
+      <div id = "cities">
+        Countries in {{ data["name"] }}
+        {% for n in countries %}
+          <div class = "row">
+            <div class = "col">
+              <div class = "city btn btn-outline-info" id = "{{n}}">{{n}}</div>
+            </div>
+          </div>
+          {% endfor %}  
+      </div>
+    
+    </body>
+   
+
+
+
+
+   {% endblock %}
+
+</html>

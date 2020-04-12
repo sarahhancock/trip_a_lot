@@ -9,7 +9,7 @@ $(document).ready(function(){
         route = "/view_content/" + this.id
         window.location.href = route
     })
-	$(".continent").click(function(){
+    $(".continent").click(function(){
         route = "/view_continent/" + this.id
         window.location.href = route
     })
