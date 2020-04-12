@@ -10,8 +10,6 @@ from flask import Flask, request, render_template, g, redirect, Response
 
 tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 app = Flask(__name__, template_folder=tmpl_dir)
-
-
 DATABASEURI = "postgresql://seh2209:2753@35.231.103.173/proj1part2"
 engine = create_engine(DATABASEURI)
 
@@ -31,7 +29,6 @@ def teardown_request(exception):
   except Exception as e:
     pass
 
-
 @app.route('/')
 def index():
   cursor = g.conn.execute("SELECT name FROM city")
@@ -44,6 +41,7 @@ def index():
 
 @app.route('/view_city/<name>')
 def view_city(name=None):
+
     #get information about city
     cursor = g.conn.execute("SELECT name, weather, main_attraction FROM city WHERE name = '{}'".format(name))
     city = {}
@@ -52,6 +50,7 @@ def view_city(name=None):
       city["weather"] = str(result['weather'])
       city["main_attraction"] = str(result['main_attraction'])
     cursor.close()
+
     #get content titles about city
     cursor = g.conn.execute("SELECT title FROM about, city WHERE city.name = '{}' and about.place_id = city.place_id".format(name))
     content = []
@@ -70,21 +69,25 @@ def view_city(name=None):
 
 @app.route('/view_country/<name>')
 def view_country(name=None):
+
     #get information about country
-    cursor = g.conn.execute("SELECT gdp, population, crime_rate FROM place, country WHERE place.name = '{}' and country.place_id = place.place_id".format(name))
+    cursor = g.conn.execute("SELECT place_id, gdp, population, crime_rate FROM place, country WHERE place.name = '{}' and country.place_id = place.place_id".format(name))
     country = {}
     for result in cursor:
+      country["id"] = str(result[0])
       country["name"] = str(name)
       country["gdp"] = str(result['gdp'])
       country["population"] = str(result['population'])
       country["crime_rate"] = str(result['crime_rate'])
     cursor.close()
+
     #get content titles about country
     cursor = g.conn.execute("SELECT title FROM about, country, place WHERE place.name = '{}' and about.place_id = country.place_id and place.place_id = country.place_id".format(name))
     content = []
     for result in cursor:
       content.append(str(result['title']))
     cursor.close()
+
     #get cities in country
     cursor = g.conn.execute("SELECT DISTINCT city.name from city, country, in_country, place where place.name = '{}' and place.place_id = in_country.country_id and in_country.city_id = city.place_id".format(name))
     cities = []
@@ -92,13 +95,84 @@ def view_country(name=None):
       cities.append(str(result[0]))  
     cursor.close()
 
+    #get continent country is in
+    cursor = g.conn.execute("SELECT place.name from place, in_continent where in_continent.country_id = '{}' and place.place_id = in_continent.continent_id".format(country["id"]))
+    for result in cursor:
+      country["continent"] = str(result[0])
+    cursor.close()
+    context = dict(data = city, content = content)
+    return render_template('view_city.html', **context)  
+
     context = dict(data = country, content = content, cities = cities)
+    return render_template('view_country.html', **context) 
+
+@app.route('/view_continent/<name>')
+def view_continent(name=None):
+
+    #get information about continent
+    cursor = g.conn.execute("SELECT area, north_south, east_west FROM place, continent WHERE place.name = '{}' and continent.place_id = place.place_id".format(name))
+    continent = {}
+    for result in cursor:
+      country["name"] = str(name)
+      country["area"] = str(result['area'])
+      country["north_south"] = str(result['north_south'])
+      country["east_west"] = str(result['east_west'])
+    cursor.close()
+
+    #get content titles about continent
+    cursor = g.conn.execute("SELECT title FROM about, continent, place WHERE place.name = '{}' and about.place_id = continent.place_id and place.place_id = continent.place_id".format(name))
+    content = []
+    for result in cursor:
+      content.append(str(result['title']))
+    cursor.close()
+    
+    #get countries in continent
+    cursor = g.conn.execute("SELECT DISTINCT place.name from country, continent, in_continent, place where place.name = '{}' and place.place_id = in_continent.continent_id and in_continent.country_id = country.place_id".format(name))
+    countries = []
+    for result in cursor:
+      countries.append(str(result[0]))  
+    cursor.close()
+    context = dict(data = country, content = content, countries = countries)
     return render_template('view_country.html', **context) 
 
 @app.route('/view_content/<title>')
 def view_content(name=None):
+  #get editor info
+  cursor = g.conn.execute("SELECT name, YOE, education FROM editor, edits where edits.title = '{}' and edits.editor_id = editor.editor_id".format(title))
+  editor = {}
+  for result in editor:
+    editor["name"] = str(result["name"])
+    editor["YOE"] = str(result["yoe"])
+    editor["education"] = str(result["education"])
+  cursor.close()
+  #get article OR photo info
+  cursor = g.conn.execute("SELECT text, tag from article where title = '{}'".format(title))
+  if cursor > 0: #content is article
+    article = {}
+    for result in cursor:
+      article["title"] = str(title)
+      article["tag"] = str(result['tag'])
+      article["text"] = str(result['text'])
+    cursor.close()
+    cursor = g.conn.execute("SELECT name, bio, genre from writer, writes where writes.title = '{}' and writes.writer_id = writer.writer_id".format(title))
+    writer = {}
+    for result in cursor:
+      writer["name"] = str(result['name'])
+      writer["bio"] = str(result["bio"])
+      writer["genre"] = str(result["genre"])
+    cursor.close()
+    context = dict(article = article, writer = writer, editor = editor)
+    return render_template('view_article.html', **context) 
+  else: #content is a photo
+    return render_template('view_photo.html', **context)
 
-    return render_template('view_content.html', **context) 
+
+
+
+@app.route('/view_writer/<writer_id>')
+def view_writer(name=None):
+
+  return render_template('view_writer.html', **context) 
 
 @app.route('/search', methods=['GET'])
 def search():
@@ -117,7 +191,6 @@ def search():
     cursor.close()
     context = dict(cities = cities, countries = countries)
     return render_template('search_results.html', **context)
-
 
 
 if __name__ == "__main__":
