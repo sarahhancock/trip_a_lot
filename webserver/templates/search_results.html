@@ -28,22 +28,21 @@
         </div>
         </div><br><br>
         <div id = "results" class = "container">
+          <div id = "results" class = "card-columns">
+
+          {% for n in vities %}
+           <div class = "card city bg-light" id = "{{n}}">{{n}}</div>
+          {% endfor %}          
+
           {% for n in countries %}
-          <div class = "row">
-            <div class = "col">
-              <div class = "country btn btn-outline-info" id = "{{n}}">{{n}}</div>
-            </div>
-          </div>
-          {% endfor %}          
-        </div>
-        <div id = "results" class = "container">
-          {% for n in cities %}
-          <div class = "row">
-            <div class = "col">
-              <div class = "city btn btn-outline-info" id = "{{n}}">{{n}}</div>
-            </div>
-          </div>
-          {% endfor %}          
+              <div class = "card country bg-light" id = "{{n}}">{{n}}</div>
+          {% endfor %}
+
+          {% for n in continents %}
+              <div class = "card continent bg-light" id = "{{n}}">{{n}}</div>
+          {% endfor %}
+
+        </div>        
         </div>
       </div>
    </body>

@@ -25,15 +25,14 @@
     {% extends "layout.html" %}
     {% block content %}
     <body>
-      <div id = "city_info">
-        <div id = "header">{{ data["name"] }}</div>
-        <div id = "{{data['country']}}" class = "btn-outline-secondary country"> {{data["country"]}}</div>
-        <div>Weather: {{ data["weather"] }}</div>
-        <div> Main attraction: {{ data["main_attraction"] }}</div>
-      </div>
+      <div id = "header">{{ data["name"] }}</div>
+      <div class = "subheader"> City Information </div>
+      <div class = "bold"> Country: <div id = "{{data['country']}}" class = "btn-outline-info country"> {{data["country"]}} </div> </div>
+      <div> <span class = "bold">Weather: </span> {{ data["weather"] }}</div>
+      <div> <span class = "bold">Main attraction: </span> {{ data["main_attraction"] }}</div>
       
       <div id = "content">
-        <span class = "subheader">Articles and Photos about {{ data["name"] }} </span>
+        <div class = "subheader">Articles and Photos about {{ data["name"] }} </div>
         {% if content|length %}
           <div class="card-columns">
             {% for n in content %}

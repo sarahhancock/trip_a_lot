@@ -216,12 +216,17 @@ def search():
     for result in cursor:
       cities.append(str(result[0]))  
     cursor.close()
-    cursor = g.conn.execute("SELECT place.name FROM place, country WHERE place.name LIKE '%%{}%%' OR name Like '%%{}%%' and country.place_id = place.place_id".format(s1, s2))
+    cursor = g.conn.execute("SELECT name FROM place, country WHERE name LIKE '%%{}%%' OR name Like '%%{}%%' and country.place_id = place.place_id".format(s1, s2))
     countries = []
     for result in cursor:
       countries.append(str(result[0]))  
     cursor.close()
-    context = dict(cities = cities, countries = countries)
+    cursor = g.conn.execute("SELECT name FROM place, continent WHERE place.name LIKE '%%{}%%' OR name Like '%%{}%%' and country.place_id = place.place_id".format(s1, s2))
+    continents = []
+    for result in cursor:
+      continents.append(str(result[0]))  
+    cursor.close()
+    context = dict(cities = cities, countries = countries, continents = continents)
     return render_template('search_results.html', **context)
 
 

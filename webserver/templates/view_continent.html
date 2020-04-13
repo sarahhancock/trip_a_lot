@@ -26,17 +26,17 @@
    {% block content %}
 
    <body>
-      <div id = "country_info">
-        <div id = "header">{{ data["name"] }}</div>
-        <div id = "{{data['continent']}}" class = "btn-outline-secondary continent"> {{data["continent"]}}</div>
-        <div>Area: {{ data["area"] }}</div>
-        <div>North or South: {{ data["north_south"] }}</div>
-        <div>East or West: {{ data["east_west"] }}</div>
-      </div>
+      <div id = "header">{{ data["name"] }}</div>
+      <div class = "subheader"> City Information </div>
+      <div id = "{{data['continent']}}" class = "btn-outline-info continent"> {{data["continent"]}}</div>
+      <div><span class = "bold">Area: </span>{{ data["area"] }}</div>
+      <div><span class = "bold">North or South: </span> {{ data["north_south"] }}</div>
+      <div><span class = "bold">East or West: </span> {{ data["east_west"] }}</div>
+
       <br>
       
       <div id = "content">
-        <span class = "subheader">Articles and Photos about {{ data["name"] }} </span>
+        <div class = "subheader">Articles and Photos about {{ data["name"] }} </div>
         {% if content|length %}
           <div class="card-columns">
             {% for n in content %}
@@ -48,23 +48,20 @@
         {% endif %}
       </div>
 
-      <div id = "cities">
-        Countries in {{ data["name"] }}
-        {% for n in countries %}
-          <div class = "row">
-            <div class = "col">
-              <div class = "country btn btn-outline-info" id = "{{n}}">{{n}}</div>
-            </div>
+      <div class = "subheader">Countries in {{ data["name"] }}</div>
+      <div id = "countries">
+        {% if countries|length %}
+          <div class="card-columns">
+            {% for n in countries %}
+            <div class = "country card bg-light" id = "{{n}}">{{n}}</div>
+            {% endfor %} 
           </div>
-          {% endfor %}  
+        {% else %}
+            No countries in {{ data["name"] }} in database yet.
+        {% endif %}
       </div>
-    
     </body>
    
-
-
-
-
    {% endblock %}
 
 </html>

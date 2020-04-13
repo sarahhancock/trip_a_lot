@@ -26,16 +26,15 @@
    {% block content %}
 
    <body>
-      <div id = "country_info">
-        <div id = "header">{{ data["name"] }}</div>
-        <div id = "{{data['continent']}}" class = "btn-outline-secondary continent"> {{data["continent"]}}</div>
-        <div>GDP: {{ data["gdp"] }}</div>
-        <div>Population: {{ data["population"] }}</div>
-        <div>Crime Rate: {{ data["crime_rate"] }}</div>
-      </div>
+      <div id = "header">{{ data["name"] }}</div>
+      <div class = "subheader"> Country Information </div>
+      <div class = "bold"> Continent: <div id = "{{data['continent']}}" class = "btn-outline-info country"> {{data["continent"]}} </div> </div>
+      <div><span class = "bold">GDP:</span> {{ data["gdp"] }}</div>
+      <div><span class = "bold">Population: </span>{{ data["population"] }}</div>
+      <div><span class = "bold">Crime Rate: </span>{{ data["crime_rate"] }}</div>
       <br>
       <div id = "content">
-        <span class = "subheader">Articles and Photos about {{ data["name"] }} </span>
+        <div class = "subheader">Articles and Photos about {{ data["name"] }} </div>
         {% if content|length %}
           <div class="card-columns">
             {% for n in content %}
@@ -46,22 +45,20 @@
             No articles or photos about {{ data["name"] }} yet.
         {% endif %}
       </div>
-      <div id = "cities">
-        Cities in {{ data["name"] }}
-        {% for n in cities %}
-          <div class = "row">
-            <div class = "col">
-              <div class = "city btn btn-outline-info" id = "{{n}}">{{n}}</div>
-            </div>
+      <br>
+      <div class = "subheader"> Cities in {{ data["name"] }} </div>
+        <div id = "cities">
+        {% if cities|length %}
+          <div class="card-columns">
+            {% for n in cities %}
+            <div class = "city card bg-light" id = "{{n}}">{{n}}</div>
+            {% endfor %} 
           </div>
-          {% endfor %}  
-      </div>
-    
-    </body>
-   
-
-
-
+        {% else %}
+            No cities in {{ data["name"] }} in database yet.
+        {% endif %}
+      </div>    
+    </body> 
 
    {% endblock %}
 

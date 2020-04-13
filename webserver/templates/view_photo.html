@@ -25,19 +25,23 @@
         <img src = "{{ photo['url'] }}">
       </div>
       <div id = "photo-info">
-        Photo Information:
-        <div> Size: {{ photo["size"] }}</div>
-        <div> Resolution:{{ photo["resolution"] }}</div>
-        <div> Type: {{ photo["type"] }}</div>
-        <div> Copyright: {{ photo["copyright"] }}</div>
+        <div class = "subheader"> Photo Information: </div>
+        <div> <span class = "bold"> Size: </span> {{ photo["size"] }} </div>
+        <div> <span class = "bold"> Resolution:</span> {{ photo["resolution"] }} </div>
+        <div> <span class = "bold"> Type: </span> {{ photo["type"] }}</div>
+        <div> <span class = "bold"> Copyright: </span>{{ photo["copyright"] }} </div>
       </div>
+      <br>
       <div id = "photographer-info">
-        <div> Photographer: {{ photographer["name"] }}</div> 
-        <div> Bio: {{ photographer["bio"] }}</div> 
-        <div> Company: {{ photographer["company"] }}</div> 
-        <div> Known For {{ photographer["known_for"] }}</div> 
+        <div class = "bold"> Photographer Information </div>
+        <div> <span class = "bold"> Photographer: </span>{{ photographer["name"] }} </div> 
+        <div> <span class = "bold"> Bio: </span> {{ photographer["bio"] }} </div> 
+        <div> <span class = "bold"> Company: </span> {{ photographer["company"] }} </div> 
+        <div> <span class = "bold"> Known For </span> {{ photographer["known_for"] }} </div> 
       </div>
+      <br>
       <div id = "editor-info">
+        <div class = "bold"> Editor Information </div>
         This article was edited by {{ editor["name"] }}, a {{ editor["education"] }} graduate with {{ editor["yoe"] }} years of experience.  	
     </body>
     {% endblock %}

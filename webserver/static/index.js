@@ -13,12 +13,10 @@ $(document).ready(function(){
         route = "/view_continent/" + this.id
         window.location.href = route
     })
-
-     $( ".card" ).hover(
-  function() {
-    $(this).addClass('text-info').css('cursor', 'pointer'); 
-  }, function() {
-    $(this).removeClass('text-info');
-  }
+    $( ".card" ).hover(function() {
+      $(this).addClass('text-info').css('cursor', 'pointer'); 
+    }, function() {
+      $(this).removeClass('text-info');
+    }
 );
 })
