@@ -221,7 +221,7 @@ def search():
     for result in cursor:
       countries.append(str(result[0]))  
     cursor.close()
-    cursor = g.conn.execute("SELECT name FROM place, continent WHERE place.name LIKE '%%{}%%' OR name Like '%%{}%%' and country.place_id = place.place_id".format(s1, s2))
+    cursor = g.conn.execute("SELECT name FROM place, continent WHERE place.name LIKE '%%{}%%' OR name Like '%%{}%%' and continent.place_id = place.place_id".format(s1, s2))
     continents = []
     for result in cursor:
       continents.append(str(result[0]))  

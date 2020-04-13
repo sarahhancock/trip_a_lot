@@ -1,19 +1,6 @@
 <!DOCTYPE html>
 <html>
    <head>
-    <style>
-      #header{
-          font-size: 40px;
-          padding-bottom: 25px;
-          padding-top: 25px;
-          font-weight: bold;
-      }
-      .continent{
-          font-size: 25px;
-          font-weight: bold;
-        }
-
-    </style>
     <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -28,7 +15,7 @@
    <body>
       <div id = "header">{{ data["name"] }}</div>
       <div class = "subheader"> Country Information </div>
-      <div class = "bold"> Continent: <div id = "{{data['continent']}}" class = "btn-outline-info country"> {{data["continent"]}} </div> </div>
+      <div class = "bold"> Continent: <span id = "{{data['continent']}}" class = "btn-outline-info continent"> {{data["continent"]}} </span> </div>
       <div><span class = "bold">GDP:</span> {{ data["gdp"] }}</div>
       <div><span class = "bold">Population: </span>{{ data["population"] }}</div>
       <div><span class = "bold">Crime Rate: </span>{{ data["crime_rate"] }}</div>

@@ -2,17 +2,6 @@
 <html>
   <head>
       <style>
-        #header{
-          font-size: 40px;
-          padding: 50px;
-          padding-bottom: 25px;
-          padding-left: 0px;
-          font-weight: bold;
-        }
-        .country{
-          font-size: 25px;
-          font-weight: bold;
-        }
       </style>
       <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
       <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
@@ -27,7 +16,7 @@
     <body>
       <div id = "header">{{ data["name"] }}</div>
       <div class = "subheader"> City Information </div>
-      <div class = "bold"> Country: <div id = "{{data['country']}}" class = "btn-outline-info country"> {{data["country"]}} </div> </div>
+      <div class = "bold"> Country: <span id = "{{data['country']}}" class = "btn-outline-info country"> {{data["country"]}} </span> </div>
       <div> <span class = "bold">Weather: </span> {{ data["weather"] }}</div>
       <div> <span class = "bold">Main attraction: </span> {{ data["main_attraction"] }}</div>
       
